@@ -12,3 +12,11 @@ Requirements: Node.js (version in `.node-version`) and pnpm (version in `package
 pnpm install --frozen-lockfile
 pnpm run check
 ```
+
+## Licence
+
+Tous droits réservés.
+
+Le code et les contenus du site ne sont pas sous licence libre : le dépôt est public, mais toute réutilisation est soumise à une autorisation préalable. C'est pourquoi `package.json` déclare `"license": "UNLICENSED"` et le dépôt ne contient pas de fichier `LICENSE`.
+
+Cette mention couvre le code et les contenus propres au site, pas les données issues des sources tierces (Météo-France, Open-Meteo, modèles) : ces données gardent leurs propres licences et doivent être accompagnées de leurs mentions d'attribution, par exemple « Données Météo-France » avec la date de dernière mise à jour, ou « Weather data by Open-Meteo.com » avec les crédits des modèles.
