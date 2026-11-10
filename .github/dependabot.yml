@@ -12,6 +12,12 @@ updates:
     cooldown:
       default-days: 7
       semver-major-days: 30
+      # Our two published packages are proposed the day they ship, like pnpm's
+      # minimumReleaseAgeExclude (owner decision of 10/11/2026; `exclude` checked in GitHub's
+      # Dependabot options reference, github/docs@92ac1df).
+      exclude:
+        - "@meteo-consensus/contracts"
+        - "@meteo-consensus/db"
     labels:
       - type:chore
     groups:
