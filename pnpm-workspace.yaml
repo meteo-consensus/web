@@ -5,5 +5,10 @@ packages:
 # A version is installable only once it has been public for 7 days (minutes).
 minimumReleaseAge: 10080
 
+# Our own packages are exempt: they are built by our CI from reviewed code, and the delay
+# targets compromised third-party packages (owner decision of 10/11/2026, docs/standards.md).
+minimumReleaseAgeExclude:
+  - "@meteo-consensus/*"
+
 # No dependency runs install scripts unless listed here with a reason in the PR.
 onlyBuiltDependencies: []
