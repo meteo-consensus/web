@@ -1,5 +1,6 @@
 # Release PRs, tags and CHANGELOG.md from Conventional Commits (release-please).
-# Set `publish: true` only in repos that ship an npm package (contracts, db).
+# This repo ships no package: it calls the reusable `release.yml` only, without the
+# `publish.yml` job, so it never grants `packages: write` (meteo-consensus/.github#11).
 name: Release
 
 on:
@@ -10,10 +11,7 @@ permissions: {}
 
 jobs:
   release:
-    uses: meteo-consensus/.github/.github/workflows/release.yml@62883f3d2d53c3c756fbcdb3c0888bfebc0656a3 # main, untagged (09/11/2026)
-    with:
-      publish: false
+    uses: meteo-consensus/.github/.github/workflows/release.yml@f5404e8340d7c1042b0b61104e89143cd6ab76b4 # main, untagged (10/11/2026)
     permissions:
       contents: write
       pull-requests: write
-      packages: write
