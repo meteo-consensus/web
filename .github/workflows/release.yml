@@ -11,7 +11,7 @@ permissions: {}
 
 jobs:
   release:
-    uses: meteo-consensus/.github/.github/workflows/release.yml@f5404e8340d7c1042b0b61104e89143cd6ab76b4 # main, untagged (10/11/2026)
+    uses: meteo-consensus/.github/.github/workflows/release.yml@5f4bc58cc4bcc0bea74123dd39cbc54235c380e7 # v0.1.3 (tag checked 12/11/2026)
     permissions:
       contents: write
       pull-requests: write
