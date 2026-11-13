@@ -1,9 +1,26 @@
 # Routine updates. Cooldown: a release is proposed only after it has been public for a
 # while (same rule as pnpm minimumReleaseAge); security updates are never delayed.
 version: 2
+
+# Dependabot only reads public registries unless one is declared here. `scope` maps
+# @meteo-consensus to GitHub Packages; with it, Dependabot writes its own .npmrc from these
+# credentials, ahead of the committed one. No `replaces-base`: every other package still comes
+# from the public npm registry. Token: org Dependabot secret, classic PAT with read:packages
+# only (owner decision of 10/11/2026, meteo-consensus/factory#71). Keys and secret syntax
+# checked in GitHub's Dependabot options reference and private registries guides
+# (github/docs@6d56af0, 13/11/2026).
+registries:
+  npm-github-packages:
+    type: npm-registry
+    url: https://npm.pkg.github.com
+    scope: "@meteo-consensus"
+    token: ${{secrets.GH_PACKAGES_READ_TOKEN}}
+
 updates:
   - package-ecosystem: npm
     directory: /
+    registries:
+      - npm-github-packages
     schedule:
       interval: weekly
     commit-message:
@@ -20,12 +37,19 @@ updates:
         - "@meteo-consensus/db"
     labels:
       - type:chore
+    # Patches and minors never share a pull request: the merge gate only merges a Dependabot
+    # patch (X.Y.Z to X.Y.Z'), so a mixed group would always be refused (docs/merge-gate.md).
+    # Majors stay one pull request per dependency.
     groups:
-      npm-minor-patch:
+      npm-patch:
+        update-types:
+          - patch
+      npm-minor:
         update-types:
           - minor
-          - patch
 
+  # Also bumps the SHA of the org's reusable workflows (meteo-consensus/.github), which
+  # Dependabot handles like actions (docs.github.com, supported ecosystems, checked 09/11/2026).
   - package-ecosystem: github-actions
     directory: /
     schedule:
