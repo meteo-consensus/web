@@ -37,14 +37,33 @@ updates:
         - "@meteo-consensus/db"
     labels:
       - type:chore
-    # Patches and minors never share a pull request: the merge gate only merges a Dependabot
-    # patch (X.Y.Z to X.Y.Z'), so a mixed group would always be refused (docs/merge-gate.md).
-    # Majors stay one pull request per dependency.
+    # Our own packages never share a pull request with third-party ones. Before 1.0 a minor
+    # of contracts is breaking (feat! bumps the minor, docs/standards.md), and the lockfile
+    # resolves GitHub Packages with a `tarball:` line the merge gate refuses, so a mixed group
+    # would hide a breaking bump among routine ones and block every third-party patch. Every
+    # bump of @meteo-consensus/* is merged by the owner, never by the gate. When the bump is a
+    # minor of contracts in db, the `peerDependencies` range of @meteo-consensus/contracts is
+    # also raised by hand on the same branch: Dependabot only moves the devDependency.
+    # A dependency joins the first group it matches; `exclude-patterns` on the third-party
+    # groups keeps them apart even if the groups are reordered. Keys `patterns`,
+    # `exclude-patterns` and `update-types` and the first-match rule checked in GitHub's
+    # Dependabot options reference, section `groups` (github/docs@8e81815, 19/11/2026); `*`
+    # matches any characters, `/` included (dependabot-core@5838e62, wildcard_matcher.rb).
+    # Third-party patches and minors never share a pull request: the merge gate only merges a
+    # Dependabot patch (X.Y.Z to X.Y.Z'), so a mixed group would always be refused
+    # (docs/merge-gate.md). Third-party majors stay one pull request per dependency.
     groups:
+      npm-meteo-consensus:
+        patterns:
+          - "@meteo-consensus/*"
       npm-patch:
+        exclude-patterns:
+          - "@meteo-consensus/*"
         update-types:
           - patch
       npm-minor:
+        exclude-patterns:
+          - "@meteo-consensus/*"
         update-types:
           - minor
 
